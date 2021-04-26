@@ -1,4 +1,4 @@
-name: "setup-pack"
+name: "Buildpacks: setup-pack"
 description: "Install a version of Buldpacks' pack tool"
 branding:
   icon: "box"
