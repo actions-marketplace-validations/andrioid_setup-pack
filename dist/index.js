@@ -3906,7 +3906,7 @@ async function main() {
       arch = "amd64";
     }
     let toolPath = import_tool_cache.default.find(FILENAME, version, arch);
-    if (!toolPath || true) {
+    if (!toolPath) {
       const context = {
         PLATFORM: platform,
         PACK_VERSION: version
