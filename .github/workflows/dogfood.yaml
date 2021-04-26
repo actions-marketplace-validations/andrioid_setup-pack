@@ -5,6 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Test pack
     steps:
+      - uses: actions/checkout@v1
       - name: Setup pack
         id: hello
         uses: ./
