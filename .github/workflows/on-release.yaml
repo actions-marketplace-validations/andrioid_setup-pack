@@ -1,0 +1,14 @@
+name: Release Defaults Bot
+on:
+  release:
+    types:
+      - created
+      - edited
+
+jobs:
+  release-notes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: andrioid/release-defaults-bot@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
