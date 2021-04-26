@@ -1,0 +1,14 @@
+name: "setup-pack"
+description: "Install a version of Buldpacks' pack tool"
+inputs:
+  pack-version: # id of input
+    description: "What version of Pack to install"
+    required: false
+    default: "0.18.1"
+  pack-url:
+    description: "Where to download from"
+    required: false
+    default: "https://github.com/buildpacks/pack/releases/download/v{PACK_VERSION}/pack-v{PACK_VERSION}-{PLATFORM}.tgz"
+runs:
+  using: "node12"
+  main: "dist/index.js"
