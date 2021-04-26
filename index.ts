@@ -1,9 +1,10 @@
-import { addPath, getInput, setFailed } from "@actions/core";
+import { addPath, getInput, setFailed, debug } from "@actions/core";
 import os from "os";
 import cache from "@actions/tool-cache";
 import { promisify } from "util";
 import fs from "fs";
 import path from "path";
+import { countReset } from "console";
 
 const chmod = promisify(fs.chmod);
 
@@ -19,7 +20,7 @@ async function main() {
       arch = "amd64";
     }
 
-    let toolPath = cache.find("pack", version, arch);
+    let toolPath = cache.find(FILENAME, version, arch);
     if (!toolPath) {
       const context: { [key: string]: string } = {
         arch,
@@ -38,6 +39,8 @@ async function main() {
         version
       );
     }
+
+    debug("toolpath:" + toolPath);
 
     await chmod(path.join(toolPath, FILENAME), 0o755);
     addPath(toolPath);
