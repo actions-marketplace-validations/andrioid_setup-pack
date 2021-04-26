@@ -30,4 +30,4 @@ Change the `index.ts` and remember to run `npm run build` afterwards. I use [esb
 
 ## Credits
 
-- [setup-yq](https://github.com/chrisdickinson/setup-yq) inspired me to write this. It's very lean and mean.
+- [setup-yq](https://github.com/chrisdickinson/setup-yq) inspired me to write this. His action is very lean and mean.
