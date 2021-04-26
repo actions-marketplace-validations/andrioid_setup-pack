@@ -1,5 +1,7 @@
 name: "setup-pack"
 description: "Install a version of Buldpacks' pack tool"
+icon: "box"
+color: "purple"
 inputs:
   pack-version: # id of input
     description: "What version of Pack to install"
@@ -12,5 +14,3 @@ inputs:
 runs:
   using: "node12"
   main: "dist/index.js"
-icon: box
-color: "#2E3440"
