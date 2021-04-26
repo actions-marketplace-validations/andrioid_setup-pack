@@ -255,10 +255,10 @@ var require_core = __commonJS((exports2) => {
     return process.env["RUNNER_DEBUG"] === "1";
   }
   exports2.isDebug = isDebug;
-  function debug2(message) {
+  function debug(message) {
     command_1.issueCommand("debug", {}, message);
   }
-  exports2.debug = debug2;
+  exports2.debug = debug;
   function error(message) {
     command_1.issue("error", message instanceof Error ? message.toString() : message);
   }
@@ -267,10 +267,10 @@ var require_core = __commonJS((exports2) => {
     command_1.issue("warning", message instanceof Error ? message.toString() : message);
   }
   exports2.warning = warning;
-  function info(message) {
+  function info2(message) {
     process.stdout.write(message + os2.EOL);
   }
-  exports2.info = info;
+  exports2.info = info2;
   function startGroup(name) {
     command_1.issue("group", name);
   }
@@ -740,15 +740,15 @@ var require_io = __commonJS((exports2) => {
 // node_modules/semver/semver.js
 var require_semver = __commonJS((exports2, module2) => {
   exports2 = module2.exports = SemVer;
-  var debug2;
+  var debug;
   if (typeof process === "object" && process.env && process.env.NODE_DEBUG && /\bsemver\b/i.test(process.env.NODE_DEBUG)) {
-    debug2 = function() {
+    debug = function() {
       var args = Array.prototype.slice.call(arguments, 0);
       args.unshift("SEMVER");
       console.log.apply(console, args);
     };
   } else {
-    debug2 = function() {
+    debug = function() {
     };
   }
   exports2.SEMVER_SPEC_VERSION = "2.0.0";
@@ -845,7 +845,7 @@ var require_semver = __commonJS((exports2, module2) => {
   tok("STAR");
   src[t.STAR] = "(<|>)?=?\\s*\\*";
   for (var i = 0; i < R; i++) {
-    debug2(i, src[i]);
+    debug(i, src[i]);
     if (!re[i]) {
       re[i] = new RegExp(src[i]);
     }
@@ -910,7 +910,7 @@ var require_semver = __commonJS((exports2, module2) => {
     if (!(this instanceof SemVer)) {
       return new SemVer(version, options);
     }
-    debug2("SemVer", version, options);
+    debug("SemVer", version, options);
     this.options = options;
     this.loose = !!options.loose;
     var m = version.trim().match(options.loose ? re[t.LOOSE] : re[t.FULL]);
@@ -957,7 +957,7 @@ var require_semver = __commonJS((exports2, module2) => {
     return this.version;
   };
   SemVer.prototype.compare = function(other) {
-    debug2("SemVer.compare", this.version, this.options, other);
+    debug("SemVer.compare", this.version, this.options, other);
     if (!(other instanceof SemVer)) {
       other = new SemVer(other, this.options);
     }
@@ -984,7 +984,7 @@ var require_semver = __commonJS((exports2, module2) => {
     do {
       var a = this.prerelease[i2];
       var b = other.prerelease[i2];
-      debug2("prerelease compare", i2, a, b);
+      debug("prerelease compare", i2, a, b);
       if (a === void 0 && b === void 0) {
         return 0;
       } else if (b === void 0) {
@@ -1006,7 +1006,7 @@ var require_semver = __commonJS((exports2, module2) => {
     do {
       var a = this.build[i2];
       var b = other.build[i2];
-      debug2("prerelease compare", i2, a, b);
+      debug("prerelease compare", i2, a, b);
       if (a === void 0 && b === void 0) {
         return 0;
       } else if (b === void 0) {
@@ -1265,7 +1265,7 @@ var require_semver = __commonJS((exports2, module2) => {
     if (!(this instanceof Comparator)) {
       return new Comparator(comp, options);
     }
-    debug2("comparator", comp, options);
+    debug("comparator", comp, options);
     this.options = options;
     this.loose = !!options.loose;
     this.parse(comp);
@@ -1274,7 +1274,7 @@ var require_semver = __commonJS((exports2, module2) => {
     } else {
       this.value = this.operator + this.semver.version;
     }
-    debug2("comp", this);
+    debug("comp", this);
   }
   var ANY = {};
   Comparator.prototype.parse = function(comp) {
@@ -1297,7 +1297,7 @@ var require_semver = __commonJS((exports2, module2) => {
     return this.value;
   };
   Comparator.prototype.test = function(version) {
-    debug2("Comparator.test", version, this.options.loose);
+    debug("Comparator.test", version, this.options.loose);
     if (this.semver === ANY || version === ANY) {
       return true;
     }
@@ -1391,9 +1391,9 @@ var require_semver = __commonJS((exports2, module2) => {
     range = range.trim();
     var hr = loose ? re[t.HYPHENRANGELOOSE] : re[t.HYPHENRANGE];
     range = range.replace(hr, hyphenReplace);
-    debug2("hyphen replace", range);
+    debug("hyphen replace", range);
     range = range.replace(re[t.COMPARATORTRIM], comparatorTrimReplace);
-    debug2("comparator trim", range, re[t.COMPARATORTRIM]);
+    debug("comparator trim", range, re[t.COMPARATORTRIM]);
     range = range.replace(re[t.TILDETRIM], tildeTrimReplace);
     range = range.replace(re[t.CARETTRIM], caretTrimReplace);
     range = range.split(/\s+/).join(" ");
@@ -1446,15 +1446,15 @@ var require_semver = __commonJS((exports2, module2) => {
     });
   }
   function parseComparator(comp, options) {
-    debug2("comp", comp, options);
+    debug("comp", comp, options);
     comp = replaceCarets(comp, options);
-    debug2("caret", comp);
+    debug("caret", comp);
     comp = replaceTildes(comp, options);
-    debug2("tildes", comp);
+    debug("tildes", comp);
     comp = replaceXRanges(comp, options);
-    debug2("xrange", comp);
+    debug("xrange", comp);
     comp = replaceStars(comp, options);
-    debug2("stars", comp);
+    debug("stars", comp);
     return comp;
   }
   function isX(id) {
@@ -1468,7 +1468,7 @@ var require_semver = __commonJS((exports2, module2) => {
   function replaceTilde(comp, options) {
     var r = options.loose ? re[t.TILDELOOSE] : re[t.TILDE];
     return comp.replace(r, function(_, M, m, p, pr) {
-      debug2("tilde", comp, _, M, m, p, pr);
+      debug("tilde", comp, _, M, m, p, pr);
       var ret;
       if (isX(M)) {
         ret = "";
@@ -1477,12 +1477,12 @@ var require_semver = __commonJS((exports2, module2) => {
       } else if (isX(p)) {
         ret = ">=" + M + "." + m + ".0 <" + M + "." + (+m + 1) + ".0";
       } else if (pr) {
-        debug2("replaceTilde pr", pr);
+        debug("replaceTilde pr", pr);
         ret = ">=" + M + "." + m + "." + p + "-" + pr + " <" + M + "." + (+m + 1) + ".0";
       } else {
         ret = ">=" + M + "." + m + "." + p + " <" + M + "." + (+m + 1) + ".0";
       }
-      debug2("tilde return", ret);
+      debug("tilde return", ret);
       return ret;
     });
   }
@@ -1492,10 +1492,10 @@ var require_semver = __commonJS((exports2, module2) => {
     }).join(" ");
   }
   function replaceCaret(comp, options) {
-    debug2("caret", comp, options);
+    debug("caret", comp, options);
     var r = options.loose ? re[t.CARETLOOSE] : re[t.CARET];
     return comp.replace(r, function(_, M, m, p, pr) {
-      debug2("caret", comp, _, M, m, p, pr);
+      debug("caret", comp, _, M, m, p, pr);
       var ret;
       if (isX(M)) {
         ret = "";
@@ -1508,7 +1508,7 @@ var require_semver = __commonJS((exports2, module2) => {
           ret = ">=" + M + "." + m + ".0 <" + (+M + 1) + ".0.0";
         }
       } else if (pr) {
-        debug2("replaceCaret pr", pr);
+        debug("replaceCaret pr", pr);
         if (M === "0") {
           if (m === "0") {
             ret = ">=" + M + "." + m + "." + p + "-" + pr + " <" + M + "." + m + "." + (+p + 1);
@@ -1519,7 +1519,7 @@ var require_semver = __commonJS((exports2, module2) => {
           ret = ">=" + M + "." + m + "." + p + "-" + pr + " <" + (+M + 1) + ".0.0";
         }
       } else {
-        debug2("no pr");
+        debug("no pr");
         if (M === "0") {
           if (m === "0") {
             ret = ">=" + M + "." + m + "." + p + " <" + M + "." + m + "." + (+p + 1);
@@ -1530,12 +1530,12 @@ var require_semver = __commonJS((exports2, module2) => {
           ret = ">=" + M + "." + m + "." + p + " <" + (+M + 1) + ".0.0";
         }
       }
-      debug2("caret return", ret);
+      debug("caret return", ret);
       return ret;
     });
   }
   function replaceXRanges(comp, options) {
-    debug2("replaceXRanges", comp, options);
+    debug("replaceXRanges", comp, options);
     return comp.split(/\s+/).map(function(comp2) {
       return replaceXRange(comp2, options);
     }).join(" ");
@@ -1544,7 +1544,7 @@ var require_semver = __commonJS((exports2, module2) => {
     comp = comp.trim();
     var r = options.loose ? re[t.XRANGELOOSE] : re[t.XRANGE];
     return comp.replace(r, function(ret, gtlt, M, m, p, pr) {
-      debug2("xRange", comp, ret, gtlt, M, m, p, pr);
+      debug("xRange", comp, ret, gtlt, M, m, p, pr);
       var xM = isX(M);
       var xm = xM || isX(m);
       var xp = xm || isX(p);
@@ -1588,12 +1588,12 @@ var require_semver = __commonJS((exports2, module2) => {
       } else if (xp) {
         ret = ">=" + M + "." + m + ".0" + pr + " <" + M + "." + (+m + 1) + ".0" + pr;
       }
-      debug2("xRange return", ret);
+      debug("xRange return", ret);
       return ret;
     });
   }
   function replaceStars(comp, options) {
-    debug2("replaceStars", comp, options);
+    debug("replaceStars", comp, options);
     return comp.trim().replace(re[t.STAR], "");
   }
   function hyphenReplace($0, from, fM, fm, fp, fpr, fb, to, tM, tm, tp, tpr, tb) {
@@ -1645,7 +1645,7 @@ var require_semver = __commonJS((exports2, module2) => {
     }
     if (version.prerelease.length && !options.includePrerelease) {
       for (i2 = 0; i2 < set.length; i2++) {
-        debug2(set[i2].semver);
+        debug(set[i2].semver);
         if (set[i2].semver === ANY) {
           continue;
         }
@@ -2134,7 +2134,7 @@ var require_tunnel = __commonJS((exports2) => {
       connectOptions.headers = connectOptions.headers || {};
       connectOptions.headers["Proxy-Authorization"] = "Basic " + new Buffer(connectOptions.proxyAuth).toString("base64");
     }
-    debug2("making CONNECT request");
+    debug("making CONNECT request");
     var connectReq = self.request(connectOptions);
     connectReq.useChunkedEncodingByDefault = false;
     connectReq.once("response", onResponse);
@@ -2154,7 +2154,7 @@ var require_tunnel = __commonJS((exports2) => {
       connectReq.removeAllListeners();
       socket.removeAllListeners();
       if (res.statusCode !== 200) {
-        debug2("tunneling socket could not be established, statusCode=%d", res.statusCode);
+        debug("tunneling socket could not be established, statusCode=%d", res.statusCode);
         socket.destroy();
         var error = new Error("tunneling socket could not be established, statusCode=" + res.statusCode);
         error.code = "ECONNRESET";
@@ -2163,7 +2163,7 @@ var require_tunnel = __commonJS((exports2) => {
         return;
       }
       if (head.length > 0) {
-        debug2("got illegal response body from proxy");
+        debug("got illegal response body from proxy");
         socket.destroy();
         var error = new Error("got illegal response body from proxy");
         error.code = "ECONNRESET";
@@ -2171,13 +2171,13 @@ var require_tunnel = __commonJS((exports2) => {
         self.removeSocket(placeholder);
         return;
       }
-      debug2("tunneling connection has established");
+      debug("tunneling connection has established");
       self.sockets[self.sockets.indexOf(placeholder)] = socket;
       return cb(socket);
     }
     function onError(cause) {
       connectReq.removeAllListeners();
-      debug2("tunneling socket could not be established, cause=%s\n", cause.message, cause.stack);
+      debug("tunneling socket could not be established, cause=%s\n", cause.message, cause.stack);
       var error = new Error("tunneling socket could not be established, cause=" + cause.message);
       error.code = "ECONNRESET";
       options.request.emit("error", error);
@@ -2235,9 +2235,9 @@ var require_tunnel = __commonJS((exports2) => {
     }
     return target;
   }
-  var debug2;
+  var debug;
   if (process.env.NODE_DEBUG && /\btunnel\b/.test(process.env.NODE_DEBUG)) {
-    debug2 = function() {
+    debug = function() {
       var args = Array.prototype.slice.call(arguments);
       if (typeof args[0] === "string") {
         args[0] = "TUNNEL: " + args[0];
@@ -2247,10 +2247,10 @@ var require_tunnel = __commonJS((exports2) => {
       console.error.apply(console, args);
     };
   } else {
-    debug2 = function() {
+    debug = function() {
     };
   }
-  exports2.debug = debug2;
+  exports2.debug = debug;
 });
 
 // node_modules/tunnel/index.js
@@ -2449,12 +2449,12 @@ var require_http_client = __commonJS((exports2) => {
         throw new Error("Client has already been disposed.");
       }
       let parsedUrl = new URL(requestUrl);
-      let info = this._prepareRequest(verb, parsedUrl, headers);
+      let info2 = this._prepareRequest(verb, parsedUrl, headers);
       let maxTries = this._allowRetries && RetryableHttpVerbs.indexOf(verb) != -1 ? this._maxRetries + 1 : 1;
       let numTries = 0;
       let response;
       while (numTries < maxTries) {
-        response = await this.requestRaw(info, data);
+        response = await this.requestRaw(info2, data);
         if (response && response.message && response.message.statusCode === HttpCodes.Unauthorized) {
           let authenticationHandler;
           for (let i = 0; i < this.handlers.length; i++) {
@@ -2464,7 +2464,7 @@ var require_http_client = __commonJS((exports2) => {
             }
           }
           if (authenticationHandler) {
-            return authenticationHandler.handleAuthentication(this, info, data);
+            return authenticationHandler.handleAuthentication(this, info2, data);
           } else {
             return response;
           }
@@ -2487,8 +2487,8 @@ var require_http_client = __commonJS((exports2) => {
               }
             }
           }
-          info = this._prepareRequest(verb, parsedRedirectUrl, headers);
-          response = await this.requestRaw(info, data);
+          info2 = this._prepareRequest(verb, parsedRedirectUrl, headers);
+          response = await this.requestRaw(info2, data);
           redirectsRemaining--;
         }
         if (HttpResponseRetryCodes.indexOf(response.message.statusCode) == -1) {
@@ -2508,7 +2508,7 @@ var require_http_client = __commonJS((exports2) => {
       }
       this._disposed = true;
     }
-    requestRaw(info, data) {
+    requestRaw(info2, data) {
       return new Promise((resolve, reject) => {
         let callbackForResult = function(err, res) {
           if (err) {
@@ -2516,13 +2516,13 @@ var require_http_client = __commonJS((exports2) => {
           }
           resolve(res);
         };
-        this.requestRawWithCallback(info, data, callbackForResult);
+        this.requestRawWithCallback(info2, data, callbackForResult);
       });
     }
-    requestRawWithCallback(info, data, onResult) {
+    requestRawWithCallback(info2, data, onResult) {
       let socket;
       if (typeof data === "string") {
-        info.options.headers["Content-Length"] = Buffer.byteLength(data, "utf8");
+        info2.options.headers["Content-Length"] = Buffer.byteLength(data, "utf8");
       }
       let callbackCalled = false;
       let handleResult = (err, res) => {
@@ -2531,7 +2531,7 @@ var require_http_client = __commonJS((exports2) => {
           onResult(err, res);
         }
       };
-      let req = info.httpModule.request(info.options, (msg) => {
+      let req = info2.httpModule.request(info2.options, (msg) => {
         let res = new HttpClientResponse(msg);
         handleResult(null, res);
       });
@@ -2542,7 +2542,7 @@ var require_http_client = __commonJS((exports2) => {
         if (socket) {
           socket.end();
         }
-        handleResult(new Error("Request timeout: " + info.options.path), null);
+        handleResult(new Error("Request timeout: " + info2.options.path), null);
       });
       req.on("error", function(err) {
         handleResult(err, null);
@@ -2564,27 +2564,27 @@ var require_http_client = __commonJS((exports2) => {
       return this._getAgent(parsedUrl);
     }
     _prepareRequest(method, requestUrl, headers) {
-      const info = {};
-      info.parsedUrl = requestUrl;
-      const usingSsl = info.parsedUrl.protocol === "https:";
-      info.httpModule = usingSsl ? https : http;
+      const info2 = {};
+      info2.parsedUrl = requestUrl;
+      const usingSsl = info2.parsedUrl.protocol === "https:";
+      info2.httpModule = usingSsl ? https : http;
       const defaultPort = usingSsl ? 443 : 80;
-      info.options = {};
-      info.options.host = info.parsedUrl.hostname;
-      info.options.port = info.parsedUrl.port ? parseInt(info.parsedUrl.port) : defaultPort;
-      info.options.path = (info.parsedUrl.pathname || "") + (info.parsedUrl.search || "");
-      info.options.method = method;
-      info.options.headers = this._mergeHeaders(headers);
+      info2.options = {};
+      info2.options.host = info2.parsedUrl.hostname;
+      info2.options.port = info2.parsedUrl.port ? parseInt(info2.parsedUrl.port) : defaultPort;
+      info2.options.path = (info2.parsedUrl.pathname || "") + (info2.parsedUrl.search || "");
+      info2.options.method = method;
+      info2.options.headers = this._mergeHeaders(headers);
       if (this.userAgent != null) {
-        info.options.headers["user-agent"] = this.userAgent;
+        info2.options.headers["user-agent"] = this.userAgent;
       }
-      info.options.agent = this._getAgent(info.parsedUrl);
+      info2.options.agent = this._getAgent(info2.parsedUrl);
       if (this.handlers) {
         this.handlers.forEach((handler) => {
-          handler.prepareRequest(info.options);
+          handler.prepareRequest(info2.options);
         });
       }
-      return info;
+      return info2;
     }
     _mergeHeaders(headers) {
       const lowercaseKeys = (obj) => Object.keys(obj).reduce((c, k) => (c[k.toLowerCase()] = obj[k], c), {});
