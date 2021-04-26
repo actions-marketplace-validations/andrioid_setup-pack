@@ -3578,7 +3578,7 @@ var require_tool_cache = __commonJS((exports2) => {
     });
   }
   exports2.extract7z = extract7z;
-  function extractTar(file, dest, flags = "xz") {
+  function extractTar2(file, dest, flags = "xz") {
     return __awaiter(this, void 0, void 0, function* () {
       if (!file) {
         throw new Error("parameter 'file' is required");
@@ -3620,7 +3620,7 @@ var require_tool_cache = __commonJS((exports2) => {
       return dest;
     });
   }
-  exports2.extractTar = extractTar;
+  exports2.extractTar = extractTar2;
   function extractXar(file, dest, flags = []) {
     return __awaiter(this, void 0, void 0, function* () {
       assert_1.ok(IS_MAC, "extractXar() not supported on current OS");

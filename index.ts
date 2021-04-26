@@ -1,6 +1,6 @@
 import { addPath, getInput, setFailed, info } from "@actions/core";
 import os from "os";
-import cache from "@actions/tool-cache";
+import cache, { extractTar } from "@actions/tool-cache";
 import { promisify } from "util";
 import fs from "fs";
 import path from "path";
@@ -31,8 +31,9 @@ async function main() {
       });
 
       const downloadPath = await cache.downloadTool(rendered);
+      const extractedPath = await extractTar(downloadPath);
       toolPath = await cache.cacheFile(
-        downloadPath,
+        extractedPath,
         FILENAME,
         FILENAME,
         version
