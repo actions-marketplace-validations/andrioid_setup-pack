@@ -20,7 +20,8 @@ async function main() {
     }
 
     let toolPath = cache.find(FILENAME, version, arch);
-    if (!toolPath) {
+    if (!toolPath || true) {
+      // TODO: enable caching when this works
       const context: { [key: string]: string } = {
         arch,
         platform,
