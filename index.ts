@@ -31,7 +31,7 @@ async function main() {
       });
 
       const downloadPath = await cache.downloadTool(rendered);
-      const extractedPath = await extractTar(downloadPath);
+      const extractedPath = path.join(await extractTar(downloadPath), FILENAME);
       toolPath = await cache.cacheFile(
         extractedPath,
         FILENAME,

@@ -3915,7 +3915,7 @@ async function main() {
         return context[match] || "";
       });
       const downloadPath = await import_tool_cache.default.downloadTool(rendered);
-      const extractedPath = await (0, import_tool_cache.extractTar)(downloadPath);
+      const extractedPath = import_path.default.join(await (0, import_tool_cache.extractTar)(downloadPath), FILENAME);
       toolPath = await import_tool_cache.default.cacheFile(extractedPath, FILENAME, FILENAME, version);
     }
     (0, import_core.info)("toolpath:" + toolPath);
