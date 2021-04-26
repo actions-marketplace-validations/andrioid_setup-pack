@@ -12,8 +12,8 @@ on:
     branches:
       - '*'
 jobs:
-  yq-example:
-    name: YQ example!
+  pack-example:
+    name: Pack example!
     runs-on: ubuntu-latest
 
     steps:
