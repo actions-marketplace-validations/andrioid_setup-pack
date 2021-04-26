@@ -3908,9 +3908,8 @@ async function main() {
     let toolPath = import_tool_cache.default.find(FILENAME, version, arch);
     if (!toolPath || true) {
       const context = {
-        arch,
-        platform,
-        version
+        PLATFORM: platform,
+        PACK_VERSION: version
       };
       const rendered = url.replace(/\{(\w+?)\}/g, (a, match) => {
         return context[match] || "";

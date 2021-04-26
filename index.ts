@@ -23,9 +23,8 @@ async function main() {
     if (!toolPath || true) {
       // TODO: enable caching when this works
       const context: { [key: string]: string } = {
-        arch,
-        platform,
-        version,
+        PLATFORM: platform,
+        PACK_VERSION: version,
       };
       const rendered = url.replace(/\{(\w+?)\}/g, (a, match) => {
         return context[match] || "";
