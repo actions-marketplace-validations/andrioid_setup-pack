@@ -3895,3 +3895,40 @@ var import_util = __toModule(require("util"));
 var import_fs = __toModule(require("fs"));
 var import_path = __toModule(require("path"));
 var chmod = (0, import_util.promisify)(import_fs.default.chmod);
+var FILENAME = "pack";
+async function main() {
+  try {
+    const url = (0, import_core.getInput)("pack-url");
+    const version = (0, import_core.getInput)("pack-version");
+    const platform = "linux";
+    let arch = import_os.default.arch();
+    if (arch === "x64") {
+      arch = "amd64";
+    }
+    let toolPath = import_tool_cache.default.find(FILENAME, version, arch);
+    if (!toolPath || true) {
+      const context = {
+        arch,
+        platform,
+        version
+      };
+      const rendered = url.replace(/\{(\w+?)\}/g, (a, match) => {
+        return context[match] || "";
+      });
+      const downloadPath = await import_tool_cache.default.downloadTool(rendered);
+      const extractedPath = import_path.default.join(await (0, import_tool_cache.extractTar)(downloadPath), "FILENAME");
+      toolPath = await import_tool_cache.default.cacheFile(extractedPath, FILENAME, FILENAME, version);
+    }
+    (0, import_core.info)("toolpath:" + toolPath);
+    await chmod(import_path.default.join(toolPath, FILENAME), 493);
+    (0, import_core.addPath)(toolPath);
+  } catch (err) {
+    (0, import_core.setFailed)(err.message);
+  }
+}
+if (require.main === module) {
+  main().catch((err) => {
+    console.error(err.stack);
+    process.exit(1);
+  });
+}

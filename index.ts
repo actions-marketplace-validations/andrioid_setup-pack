@@ -52,3 +52,10 @@ async function main() {
     setFailed(err.message);
   }
 }
+
+if (require.main === module) {
+  main().catch((err) => {
+    console.error(err.stack);
+    process.exit(1);
+  });
+}
